@@ -24,9 +24,9 @@ for k in [1, 3, 5, 7, 9]:
             train = np.c_[training_features, training_labels]
             knn = Knn(k, p, train)
             test_prediction = knn.run_knn(testing_features)
-            train_error += knn.compute_error(test_prediction, testing_labels)
+            test_error += knn.compute_error(test_prediction, testing_labels)
             train_prediction = knn.run_knn(training_features)
-            test_error += knn.compute_error(train_prediction, training_labels)
+            train_error += knn.compute_error(train_prediction, training_labels)
         print('####################################################')
         print('Train -> k: {0}, p: {1}, error: {2}'.format(k, p, train_error/ ITERATIONS))
         print('Test -> k: {0}, p: {1}, error: {2}'.format(k, p, test_error/ ITERATIONS))

@@ -6,28 +6,28 @@ import numpy as np
 class Knn:
 
 
-    def __init__(self, k, p, data):
+    def __init__(self, k, p, train):
         self.k = k
         self.p = p
-        self.data = data
+        self.train = train
 
 
-    def run_knn(self, train):
-        labelling = []
-        for point in train:
+    def run_knn(self, test):
+        labels = []
+        for point in test:
             maj = 0
             distances = []
-            for i in range(self.data.shape[0]):
+            for i in range(self.train.shape[0]):
                 distances.append(
-                    (LA.norm((self.data[i, 0]-point[0], 
-                            self.data[i, 1]-point[1]), self.p),
-                    self.data[i, 2]))
+                    (LA.norm((self.train[i, 0]-point[0], 
+                            self.train[i, 1]-point[1]), self.p),
+                    self.train[i, 2]))
             distances.sort(key=operator.itemgetter(0),reverse=False)
             knn_distances = distances[0:self.k]
-            maj = sum(v for k, v in knn_distances)
+            maj = sum(label for dist,label in knn_distances)
             label = 1 if maj >= 0 else -1
-            labelling.append(label)
-        return labelling
+            labels.append(label)
+        return labels
         
 
     def compute_error(self, predicts, data):
